@@ -14,7 +14,7 @@ $dccert=$my | where-object {($_.Archived -eq $false) -and (($_.extensions.item("
 remove-item $dccert.pspath
 ​
 If ($?)
-    {"SUCCESS! Removed old certificate. Triggering autoenrolment for new cert.."
+    {"SUCCESS! Removed old certificate. Triggering autoenrollment for new cert.."
     
     #Trigger autoenrollment
     certutil -pulse
