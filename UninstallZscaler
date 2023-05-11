@@ -1,0 +1,27 @@
+<#
+.SYNOPSIS
+This script will uninstall zscaler using the MSI file.
+Author: Michael Becker (mbecker@outlook.com)
+https://github.com/MrV8Rumble
+
+.DESCRIPTION
+Copies the zscaler msi to the local machine, performs and uninstall and then removes the msi
+
+.NOTES
+Edit the source location of the MSI, and replace <logout password> and <policy token> as required.
+
+#>
+Copy-Item "\\files\it\repository\zscaler\Zscaler-windows-3.9.0.189-installer.msi" -Destination C:\temp
+
+$MSIInstallArguments = @(
+    "/x"
+    '"c:\temp\Zscaler-windows-3.9.0.189-installer.msi"'
+    "/quiet"
+    'UNINSTALLPASSWORD="<logout password>"'
+    "POLICYTOKEN=<policy token>" 
+    "/l*v"
+    '"C:\temp\zscaleruninstall_log.log"'
+)
+Start-Process "msiexec.exe" -ArgumentList $MSIInstallArguments -Wait -NoNewWindow 
+
+Remove-item -path "c:\temp\Zscaler-windows-3.9.0.189-installer.msi" -Force
